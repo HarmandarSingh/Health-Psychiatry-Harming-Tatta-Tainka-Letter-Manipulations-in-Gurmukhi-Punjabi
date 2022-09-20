@@ -1,6 +1,6 @@
 # Health-Psychiatry-Harming-Tatta-Tainka-Letter-Manipulations-in-Gurmukhi-Punjabi
 
-Our R&amp;D Team humbly proposes and requests for the Punjabi Alphabet is wrongly educated with Tainka Letter, while there is no such Akhara (Letter) as Tainka in the World, but rather it is Tatta, and thus we submit the following Simplified Research Report with Facebook Page Post Discussions as well:
+Our R&amp;D Team, where Dr. Andres Frederic is also one of the Main Researchers as well, humbly proposes and requests for the Punjabi Alphabet is wrongly educated with Tainka Letter, while there is no such Akhara (Letter) as Tainka in the World, but rather it is Tatta, and thus we submit the following Simplified Research Report with Facebook Page Post Discussions as well:
 
 It is discussed more here: [1] Facebook Page Post:  https://www.facebook.com/permalink.php?story_fbid=pfbid0rZrdCvT3CX3i9CzHnY6muZ3EZbzgftNou5vHeUxR7q8iPLNRK22uAy1J3oV1X7mwl&id=109767181447483
 
