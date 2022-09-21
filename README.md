@@ -42,6 +42,8 @@ Harmandar Singh with R&D Team of EK Gurmukhi Metric Systems with Cymatics
 
 Special Remark: It is further based on "One of the Major Findings of the Hypothesis of Philselfology and its Research Projects is that in the Universal (Open, Generic) IP (Intellectual Property) of the Punjabi Alphabet, Language, Linguistic and Grammar (Metric) Systems, the Letter of Tatta is wrongly used rather as a Word of Tainka". 
 
-So, it is termed as the EK Tainka Manipulation in the EK Universal IP as seems to be present in the most of the recent Published Textbooks, Books, Journals, Magazines, and Media Broadcasts both Online and Offline have thus the wrong versions in Publishing, Teaching, Educating, and Training it to the Millions of People Worldwide; the Users and Programmers as well as the Listeners, Viewers, Anchors, Speakers, Orators, Actors, Dramatists, and other Monolingual, Bilingual and Multilingual Metric Systems are also included in it as well.
+So, it is termed as the EK Tainka Manipulation in the EK Universal IP as seems to be present in the most of the recent Published Textbooks, Books, Journals, Magazines, and Media Broadcasts both Online and Offline have thus the wrong versions in Publishing, Teaching, Educating, and Training it to the Millions of People Worldwide; the Users and Programmers as well as the Listeners, Viewers, Anchors, Speakers, Orators, Actors, Dramatists, and other Monolingual, Bilingual and Multilingual Metric Systems are also included in it, while the following Wiki Pages are also created as well:
+
+Quick Wiki Page Reference: [1] [Home](https://github.com/HarmandarSingh/Health-Psychiatry-Harming-Tatta-Tainka-Letter-Manipulations-in-Gurmukhi-Punjabi/wiki)
 
 Thanks for your precious time again!
