@@ -1,0 +1,133 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f2f5;
+    overflow: hidden;
+}
+
+.book-container {
+    display: flex;
+    gap: 20px;
+    perspective: 1000px;
+}
+
+.page {
+    width: 300px;
+    height: 400px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.left-page {
+    transform: rotateY(-5deg);
+    background-color: #fcfcfc;
+}
+
+.right-page {
+    transform: rotateY(5deg);
+}
+
+#character-display {
+    font-size: 150px;
+    margin: 0;
+}
+
+#name-display {
+    font-size: 40px;
+    color: #555;
+}
+
+.recording-controls {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.recording-controls h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.buttons {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#speak-button {
+    background-color: #28a745;
+    color: white;
+}
+
+#next-button {
+    background-color: #ffc107;
+    color: white;
+}
+
+#record-button, #stop-button, #play-button {
+    padding: 8px 16px;
+    font-size: 14px;
+    margin: 5px;
+}
+
+#record-button { background-color: #dc3545; color: white; }
+#stop-button { background-color: #6c757d; color: white; }
+#play-button { background-color: #007BFF; color: white; }
+
+button:hover:not(:disabled) {
+    filter: brightness(90%);
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* --- New Keyboard Styles --- */
+.keyboard-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+    width: 620px; /* Adjust to match the width of the two pages */
+}
+
+.key {
+    width: 100px;
+    height: 60px;
+    font-size: 30px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.key:hover {
+    background-color: #e9e9e9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.key:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
