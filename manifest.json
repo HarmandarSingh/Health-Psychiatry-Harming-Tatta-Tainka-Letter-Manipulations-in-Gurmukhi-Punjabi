@@ -1,0 +1,16 @@
+{
+  "name": "Philfo AI Cloud Assisting Drive",
+  "short_name": "Philfo AI",
+  "description": "An interactive web application to explore Philselfology. It functions as a Cloud Assisting Drive, drawing from a vast database of Philselfology knowledge to power AI explanations and simulations for education and research.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0891b2",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230f172a' /><text x='50' y='50' font-size='60' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' fill='white' font-weight='bold'>P</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
