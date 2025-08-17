@@ -1,23 +1,18 @@
-export enum Tab {
-  Introduction = 'INTRODUCTION',
-  Elements = 'ELEMENTS',
-  GurmukhiMatrix = 'GURMUKHI_MATRIX',
-  Cymatics = 'CYMATICS',
-  Explainer = 'EXPLAINER',
-  AiDrive = 'AI_DRIVE',
-  UniverseSimulator = 'UNIVERSE_SIMULATOR',
-  BusinessModel = 'BUSINESS_MODEL',
-  ResearchLibrary = 'RESEARCH_LIBRARY',
-  Share = 'SHARE',
-  Journal = 'JOURNAL',
-}
+export const Tab = {
+  Introduction: 'INTRODUCTION',
+  Elements: 'ELEMENTS',
+  GurmukhiMatrix: 'GURMUKHI_MATRIX',
+  Cymatics: 'CYMATICS',
+  Explainer: 'EXPLAINER',
+  AiDrive: 'AI_DRIVE',
+  UniverseSimulator: 'UNIVERSE_SIMULATOR',
+  BusinessModel: 'BUSINESS_MODEL',
+  ResearchLibrary: 'RESEARCH_LIBRARY',
+  Share: 'SHARE',
+  Journal: 'JOURNAL',
+};
 
-export enum MessageAuthor {
-  User = 'USER',
-  AI = 'AI',
-}
-
-export interface ChatMessage {
-  author: MessageAuthor;
-  text: string;
-}
+export const MessageAuthor = {
+  User: 'USER',
+  AI: 'AI',
+};

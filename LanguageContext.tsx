@@ -1,32 +1,23 @@
-
 import * as React from 'react';
 import { translations } from './translations';
 
-export type Language = keyof typeof translations;
+export const LanguageContext = React.createContext(undefined);
 
-interface LanguageContextType {
-  language: Language;
-  setLanguage: (language: Language) => void;
-  t: (key: keyof typeof translations.en) => string;
-}
-
-export const LanguageContext = React.createContext<LanguageContextType | undefined>(undefined);
-
-export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguageState] = React.useState<Language>(() => {
+export const LanguageProvider = ({ children }) => {
+  const [language, setLanguageState] = React.useState(() => {
     const savedLang = localStorage.getItem('philfo-lang');
     if (savedLang && savedLang in translations) {
-      return savedLang as Language;
+      return savedLang;
     }
     return 'en';
   });
 
-  const setLanguage = (lang: Language) => {
+  const setLanguage = (lang) => {
     setLanguageState(lang);
     localStorage.setItem('philfo-lang', lang);
   };
 
-  const t = (key: keyof typeof translations.en): string => {
+  const t = (key) => {
     return translations[language][key] || translations.en[key];
   };
 
@@ -43,7 +34,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   );
 };
 
-export const useLanguage = (): LanguageContextType => {
+export const useLanguage = () => {
   const context = React.useContext(LanguageContext);
   if (context === undefined) {
     throw new Error('useLanguage must be used within a LanguageProvider');

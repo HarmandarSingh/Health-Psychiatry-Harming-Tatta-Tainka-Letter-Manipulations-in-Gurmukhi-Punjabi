@@ -1,29 +1,29 @@
-const CACHE_NAME = 'philfo-ai-cache-v4';
+const CACHE_NAME = 'philfo-ai-cache-v6';
 const urlsToCache = [
   'index.html',
   'manifest.json',
-  'index.tsx',
-  'App.tsx',
-  'types.ts',
-  'constants.ts',
-  'LanguageContext.tsx',
-  'translations.ts',
-  'services/geminiService.ts',
-  'components/Header.tsx',
-  'components/LoadingSpinner.tsx',
-  'components/Introduction.tsx',
-  'components/ElementsExplorer.tsx',
-  'components/GurmukhiMatrix.tsx',
-  'components/CymaticsVisualizer.tsx',
-  'components/ConceptExplainer.tsx',
-  'components/AiStreamsVisualizer.tsx',
-  'components/UniverseSimulator.tsx',
-  'components/BusinessModelSimulator.tsx',
-  'components/ResearchLibrary.tsx',
-  'components/Journal.tsx',
-  'components/ShareAndConnect.tsx',
-  'components/AdsenseUnit.tsx',
-  'components/MarkdownRenderer.tsx'
+  'index.jsx',
+  'App.jsx',
+  'types.js',
+  'constants.js',
+  'LanguageContext.jsx',
+  'translations.js',
+  'services/geminiService.js',
+  'components/Header.jsx',
+  'components/LoadingSpinner.jsx',
+  'components/Introduction.jsx',
+  'components/ElementsExplorer.jsx',
+  'components/GurmukhiMatrix.jsx',
+  'components/CymaticsVisualizer.jsx',
+  'components/ConceptExplainer.jsx',
+  'components/AiStreamsVisualizer.jsx',
+  'components/UniverseSimulator.jsx',
+  'components/BusinessModelSimulator.jsx',
+  'components/ResearchLibrary.jsx',
+  'components/Journal.jsx',
+  'components/ShareAndConnect.jsx',
+  'components/AdsenseUnit.jsx',
+  'components/MarkdownRenderer.jsx'
 ];
 
 self.addEventListener('install', event => {
@@ -37,8 +37,13 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
-  // Only handle GET requests.
-  if (event.request.method !== 'GET') {
+  const requestUrl = new URL(event.request.url);
+
+  // Only handle GET requests and requests for our own origin.
+  // This prevents the service worker from trying to handle
+  // cross-origin requests for things like Google Ads or the Tailwind CDN,
+  // which would fail when offline.
+  if (event.request.method !== 'GET' || requestUrl.origin !== self.location.origin) {
     return;
   }
 
@@ -52,7 +57,7 @@ self.addEventListener('fetch', event => {
         return fetch(event.request).then(
           networkResponse => {
             // Check if we received a valid response
-            if (!networkResponse || networkResponse.status !== 200 || (networkResponse.type !== 'basic' && networkResponse.type !== 'cors')) {
+            if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
               return networkResponse;
             }
 

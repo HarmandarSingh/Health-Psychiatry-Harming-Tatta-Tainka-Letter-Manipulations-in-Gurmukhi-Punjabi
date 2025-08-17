@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import { Tab } from './types';
 import Header from './components/Header';
@@ -15,14 +14,14 @@ import ShareAndConnect from './components/ShareAndConnect';
 import Journal from './components/Journal';
 import AdsenseUnit from './components/AdsenseUnit';
 import { ADSENSE_FOOTER_AD_SLOT } from './constants';
-import { useLanguage, Language } from './LanguageContext';
+import { useLanguage } from './LanguageContext';
 
-const LanguageSelector: React.FC = () => {
+const LanguageSelector = () => {
     const { language, setLanguage } = useLanguage();
     const [isOpen, setIsOpen] = React.useState(false);
-    const wrapperRef = React.useRef<HTMLDivElement>(null);
+    const wrapperRef = React.useRef(null);
 
-    const languages: Record<Language, string> = {
+    const languages = {
         en: 'English',
         pa: 'ਪੰਜਾਬੀ (Punjabi)',
         es: 'Español (Spanish)',
@@ -33,8 +32,8 @@ const LanguageSelector: React.FC = () => {
     };
 
     React.useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+        function handleClickOutside(event) {
+            if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
                 setIsOpen(false);
             }
         }
@@ -42,7 +41,7 @@ const LanguageSelector: React.FC = () => {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [wrapperRef]);
 
-    const handleLanguageChange = (lang: Language) => {
+    const handleLanguageChange = (lang) => {
         setLanguage(lang);
         setIsOpen(false);
     };
@@ -64,7 +63,7 @@ const LanguageSelector: React.FC = () => {
                     {Object.entries(languages).map(([key, value]) => (
                         <button
                             key={key}
-                            onClick={() => handleLanguageChange(key as Language)}
+                            onClick={() => handleLanguageChange(key)}
                             className="block w-full text-left px-4 py-2 text-sm text-slate-300 hover:bg-slate-700"
                         >
                             {value}
@@ -77,8 +76,8 @@ const LanguageSelector: React.FC = () => {
 };
 
 
-const App: React.FC = () => {
-  const [activeTab, setActiveTab] = React.useState<Tab>(Tab.Introduction);
+const App = () => {
+  const [activeTab, setActiveTab] = React.useState(Tab.Introduction);
   const { t } = useLanguage();
 
   const renderTabContent = React.useCallback(() => {
@@ -110,7 +109,7 @@ const App: React.FC = () => {
     }
   }, [activeTab]);
 
-  const NavButton = ({ tab, children }: { tab: Tab; children: React.ReactNode }) => (
+  const NavButton = ({ tab, children }) => (
     <button
       id={`tab-${tab}`}
       role="tab"

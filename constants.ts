@@ -1,4 +1,4 @@
-// For geminiService.ts
+// For geminiService.js
 export const DOCUMENT_CONTEXT = `
 This document provides context on Philselfology, a framework developed by Harmandar Singh. It explores the intersection of consciousness, physics, art, and ancient wisdom.
 
@@ -34,11 +34,11 @@ Key Concepts:
 - Code Assistant Mode: You also have a 'Code Assistant' mode. When a user asks for code, act as a helpful assistant specializing in Python, JavaScript, and other languages to model the concepts herein. For example, you can create scripts that simulate the A=N/T balance, visualize Cymatic patterns, or model data flows for the Traditional Blockchain. Always provide explanations for the code.
 `;
 
-// For ElementsExplorer.tsx
+// For ElementsExplorer.jsx
 export const CORE_ELEMENTS = ['Light', 'Sound', 'Vibration', 'Cymatics', '2D Matter', 'Consciousness'];
 
-// For GurmukhiMatrix.tsx
-export const GURMUKHI_MATRIX_DATA: string[][] = [
+// For GurmukhiMatrix.jsx
+export const GURMUKHI_MATRIX_DATA = [
   ['ੳ', 'ਅ', 'ੲ', 'ਸ', 'ਹ'],
   ['ਕ', 'ਖ', 'ਗ', 'ਘ', 'ਙ'],
   ['ਚ', 'ਛ', 'ਜ', 'ਝ', 'ਞ'],
@@ -48,7 +48,7 @@ export const GURMUKHI_MATRIX_DATA: string[][] = [
   ['ਯ', 'ਰ', 'ਲ', 'ਵ', 'ੜ'],
 ];
 
-// For ResearchLibrary.tsx and Journal.tsx
+// For ResearchLibrary.jsx and Journal.jsx
 export const RESEARCH_LINKS = {
   authorPublications: [
     { href: 'https://www.lulu.com/spotlight/harmandarsingh', title: 'Harmandar Singh\'s Author Spotlight on Lulu.com' },
