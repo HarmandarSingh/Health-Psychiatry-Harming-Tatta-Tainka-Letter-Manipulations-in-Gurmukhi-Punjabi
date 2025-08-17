@@ -112,6 +112,10 @@ const App: React.FC = () => {
 
   const NavButton = ({ tab, children }: { tab: Tab; children: React.ReactNode }) => (
     <button
+      id={`tab-${tab}`}
+      role="tab"
+      aria-selected={activeTab === tab}
+      aria-controls={`tabpanel-${tab}`}
       onClick={() => setActiveTab(tab)}
       className={`px-3 py-2 text-sm font-medium rounded-md transition-all duration-300 ${
         activeTab === tab
@@ -134,7 +138,11 @@ const App: React.FC = () => {
         </div>
 
         <main>
-          <div className="flex flex-wrap justify-center gap-2 my-8 p-2 bg-slate-800/60 rounded-lg max-w-5xl mx-auto">
+          <div
+            role="tablist"
+            aria-label="Main navigation"
+            className="flex flex-wrap justify-center gap-2 my-8 p-2 bg-slate-800/60 rounded-lg max-w-5xl mx-auto"
+          >
             <NavButton tab={Tab.Introduction}>{t('navIntro')}</NavButton>
             <NavButton tab={Tab.Elements}>{t('navElements')}</NavButton>
             <NavButton tab={Tab.GurmukhiMatrix}>{t('navMatrix')}</NavButton>
@@ -147,7 +155,13 @@ const App: React.FC = () => {
             <NavButton tab={Tab.Share}>{t('navShareConnect')}</NavButton>
             <NavButton tab={Tab.Journal}>{t('navJournal')}</NavButton>
           </div>
-          <div className="mt-6">
+          <div
+            id={`tabpanel-${activeTab}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${activeTab}`}
+            className="mt-6"
+            key={activeTab}
+          >
             {renderTabContent()}
           </div>
         </main>

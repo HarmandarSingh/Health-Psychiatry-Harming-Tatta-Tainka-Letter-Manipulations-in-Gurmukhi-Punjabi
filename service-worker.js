@@ -1,4 +1,4 @@
-const CACHE_NAME = 'philfo-ai-cache-v3';
+const CACHE_NAME = 'philfo-ai-cache-v4';
 const urlsToCache = [
   'index.html',
   'manifest.json',
@@ -22,7 +22,8 @@ const urlsToCache = [
   'components/ResearchLibrary.tsx',
   'components/Journal.tsx',
   'components/ShareAndConnect.tsx',
-  'components/AdsenseUnit.tsx'
+  'components/AdsenseUnit.tsx',
+  'components/MarkdownRenderer.tsx'
 ];
 
 self.addEventListener('install', event => {
