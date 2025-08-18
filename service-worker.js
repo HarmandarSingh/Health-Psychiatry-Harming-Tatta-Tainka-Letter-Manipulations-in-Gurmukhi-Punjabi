@@ -1,4 +1,4 @@
-const CACHE_NAME = 'philfo-ai-cache-v9';
+const CACHE_NAME = 'philfo-ai-cache-v10';
 const urlsToCache = [
   './',
   './index.html',
@@ -7,10 +7,6 @@ const urlsToCache = [
 ];
 
 self.addEventListener('install', event => {
-  // We are only pre-caching the essential "app shell" files.
-  // Other files, like components, will be cached at runtime by the 'fetch' handler
-  // when they are first requested by the browser. This avoids 404 errors during
-  // installation for files that are part of the module graph but not directly addressable.
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(async (cache) => {
@@ -29,44 +25,63 @@ self.addEventListener('install', event => {
 self.addEventListener('fetch', event => {
   const requestUrl = new URL(event.request.url);
 
-  // Only handle GET requests and requests for our own origin.
-  // This prevents the service worker from trying to handle
-  // cross-origin requests for things like Google Ads or the Tailwind CDN,
-  // which would fail when offline.
-  if (event.request.method !== 'GET' || requestUrl.origin !== self.location.origin) {
+  // Don't intercept non-GET requests
+  if (event.request.method !== 'GET') {
     return;
   }
 
-  event.respondWith(
-    caches.match(event.request)
-      .then(cachedResponse => {
+  // For requests to our own origin, use a cache-first, network-fallback strategy.
+  if (requestUrl.origin === self.location.origin) {
+    event.respondWith(
+      caches.match(event.request).then(cachedResponse => {
+        // If we have a match in the cache, return it.
         if (cachedResponse) {
           return cachedResponse;
         }
 
-        return fetch(event.request).then(
-          networkResponse => {
-            // Check if we received a valid response
-            if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-              return networkResponse;
-            }
-
-            // IMPORTANT: Clone the response. A response is a stream
-            // and because we want the browser to consume the response
-            // as well as the cache consuming the response, we need
-            // to clone it so we have two streams.
-            const responseToCache = networkResponse.clone();
-
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                cache.put(event.request, responseToCache);
-              });
-
+        // Otherwise, fetch from the network.
+        return fetch(event.request).then(async (networkResponse) => {
+          if (!networkResponse || networkResponse.status !== 200) {
             return networkResponse;
           }
-        );
+
+          // --- MIME Type Fix for .tsx files ---
+          // Some servers may serve .tsx files with an incorrect MIME type
+          // ('application/octet-stream'), which causes browsers to block them.
+          // We intercept the response and create a new one with the correct header.
+          if (requestUrl.pathname.endsWith('.tsx')) {
+            const body = await networkResponse.text();
+            const headers = new Headers(networkResponse.headers);
+            // We set the Content-Type to 'application/javascript' because after
+            // Babel's transformation, that's what the browser will execute.
+            headers.set('Content-Type', 'application/javascript');
+            
+            const responseToCache = new Response(body, {
+              status: networkResponse.status,
+              statusText: networkResponse.statusText,
+              headers: headers,
+            });
+            
+            const cache = await caches.open(CACHE_NAME);
+            await cache.put(event.request, responseToCache.clone());
+            
+            return responseToCache;
+          }
+
+          // For all other same-origin files, cache them as is.
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, responseToCache);
+          });
+
+          return networkResponse;
+        });
       })
-  );
+    );
+  }
+  // For cross-origin requests (e.g., Google Ads, CDNs), we do not call
+  // event.respondWith(). This lets the browser handle the request normally,
+  // preventing service worker interference and network errors.
 });
 
 self.addEventListener('activate', event => {
