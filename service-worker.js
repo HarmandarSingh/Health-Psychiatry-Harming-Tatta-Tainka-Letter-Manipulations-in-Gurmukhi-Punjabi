@@ -1,40 +1,20 @@
-const CACHE_NAME = 'philfo-ai-cache-v8';
+const CACHE_NAME = 'philfo-ai-cache-v9';
 const urlsToCache = [
+  './',
   './index.html',
   './manifest.json',
-  './index.tsx',
-  './App.tsx',
-  './types.ts',
-  './constants.ts',
-  './LanguageContext.tsx',
-  './translations.ts',
-  './services/geminiService.ts',
-  './components/Header.tsx',
-  './components/LoadingSpinner.tsx',
-  './components/Introduction.tsx',
-  './components/ElementsExplorer.tsx',
-  './components/GurmukhiMatrix.tsx',
-  './components/CymaticsVisualizer.tsx',
-  './components/ConceptExplainer.tsx',
-  './components/AiStreamsVisualizer.tsx',
-  './components/UniverseSimulator.tsx',
-  './components/BusinessModelSimulator.tsx',
-  './components/ResearchLibrary.tsx',
-  './components/Journal.tsx',
-  './components/ShareAndConnect.tsx',
-  './components/AdsenseUnit.tsx',
-  './components/MarkdownRenderer.tsx'
+  './index.tsx'
 ];
 
 self.addEventListener('install', event => {
-  // Make the caching process more resilient. Instead of cache.addAll(), 
-  // which fails if a single resource fails, we add resources individually 
-  // and log any errors, allowing the service worker to install successfully
-  // with the assets it could cache.
+  // We are only pre-caching the essential "app shell" files.
+  // Other files, like components, will be cached at runtime by the 'fetch' handler
+  // when they are first requested by the browser. This avoids 404 errors during
+  // installation for files that are part of the module graph but not directly addressable.
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(async (cache) => {
-        console.log('Opened cache. Caching initial assets individually.');
+        console.log('Opened cache. Caching app shell assets individually.');
         await Promise.all(
           urlsToCache.map((url) => {
             return cache.add(url).catch((reason) => {
