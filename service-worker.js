@@ -1,4 +1,4 @@
-const CACHE_NAME = 'philfo-ai-cache-v14';
+const CACHE_NAME = 'philfo-ai-cache-v15';
 const urlsToCache = [
   // Essential App Shell
   './',
@@ -39,11 +39,14 @@ self.addEventListener('install', event => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(async (cache) => {
-        console.log('Opened cache. Caching app shell assets.');
-        await cache.addAll(urlsToCache).catch(err => {
-            console.error("Failed to cache one or more app shell assets:", err);
+      .then(cache => {
+        console.log('Opened cache. Caching app shell assets individually.');
+        const promises = urlsToCache.map(urlToCache => {
+          return cache.add(urlToCache).catch(err => {
+            console.warn(`Failed to cache ${urlToCache}:`, err);
+          });
         });
+        return Promise.all(promises);
       })
   );
 });
