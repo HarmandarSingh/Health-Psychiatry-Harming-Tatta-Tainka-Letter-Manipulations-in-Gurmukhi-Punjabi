@@ -27,11 +27,21 @@ const urlsToCache = [
 ];
 
 self.addEventListener('install', event => {
+  // Make the caching process more resilient. Instead of cache.addAll(), 
+  // which fails if a single resource fails, we add resources individually 
+  // and log any errors, allowing the service worker to install successfully
+  // with the assets it could cache.
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Opened cache and caching initial assets');
-        return cache.addAll(urlsToCache);
+      .then(async (cache) => {
+        console.log('Opened cache. Caching initial assets individually.');
+        await Promise.all(
+          urlsToCache.map((url) => {
+            return cache.add(url).catch((reason) => {
+              console.warn(`Failed to cache ${url}: ${reason}`);
+            });
+          })
+        );
       })
   );
 });
