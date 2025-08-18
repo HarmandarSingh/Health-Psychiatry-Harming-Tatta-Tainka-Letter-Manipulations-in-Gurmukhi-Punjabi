@@ -1,20 +1,58 @@
-const CACHE_NAME = 'philfo-ai-cache-v11';
+const CACHE_NAME = 'philfo-ai-cache-v12';
 const urlsToCache = [
+  // Essential App Shell
   './',
   './index.html',
   './manifest.json',
+  './index.css',
+
+  // Core scripts
   './index.tsx',
-  './index.css'
+  './App.tsx',
+  './LanguageContext.tsx',
+  './translations.ts',
+  './types.ts',
+  './constants.ts',
+
+  // Services
+  './services/geminiService.ts',
+
+  // Components
+  './components/Header.tsx',
+  './components/Introduction.tsx',
+  './components/ElementsExplorer.tsx',
+  './components/GurmukhiMatrix.tsx',
+  './components/CymaticsVisualizer.tsx',
+  './components/ConceptExplainer.tsx',
+  './components/AiStreamsVisualizer.tsx',
+  './components/UniverseSimulator.tsx',
+  './components/BusinessModelSimulator.tsx',
+  './components/ResearchLibrary.tsx',
+  './components/ShareAndConnect.tsx',
+  './components/Journal.tsx',
+  './components/AdsenseUnit.tsx',
+  './components/LoadingSpinner.tsx',
+  './components/MarkdownRenderer.tsx',
+  
+  // External CDNs
+  'https://cdn.tailwindcss.com',
+  'https://unpkg.com/@babel/standalone/babel.min.js',
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(async (cache) => {
-        console.log('Opened cache. Caching app shell assets individually.');
+        console.log('Opened cache. Caching all app assets.');
+        // Use a Set to avoid duplicates and cache all unique URLs.
+        const urls = [...new Set(urlsToCache)];
         await Promise.all(
-          urlsToCache.map((url) => {
-            return cache.add(url).catch((reason) => {
+          urls.map((url) => {
+            // For external resources, we need to create a Request with no-cors mode.
+            const request = (url.startsWith('http'))
+              ? new Request(url, { mode: 'no-cors' })
+              : url;
+            return cache.add(request).catch((reason) => {
               console.warn(`Failed to cache ${url}: ${reason}`);
             });
           })
@@ -31,16 +69,14 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Network-first strategy for Tailwind CSS CDN to improve offline resilience.
-  if (requestUrl.hostname === 'cdn.tailwindcss.com') {
+  // Network-first strategy for CDN to get latest versions, with cache fallback.
+  if (requestUrl.hostname === 'cdn.tailwindcss.com' || requestUrl.hostname === 'unpkg.com') {
     event.respondWith(
       caches.open(CACHE_NAME).then(cache => {
         return fetch(event.request).then(networkResponse => {
-          // If fetch is successful, cache the new response and return it
           cache.put(event.request, networkResponse.clone());
           return networkResponse;
         }).catch(() => {
-          // If fetch fails (e.g., offline), try to get it from the cache
           console.log(`Network failed for ${requestUrl}, serving from cache.`);
           return cache.match(event.request);
         });
@@ -63,7 +99,7 @@ self.addEventListener('fetch', event => {
           }
 
           // --- MIME Type Fix for .tsx files ---
-          if (requestUrl.pathname.endsWith('.tsx')) {
+          if (requestUrl.pathname.endsWith('.tsx') || requestUrl.pathname.endsWith('.ts')) {
             const body = await networkResponse.text();
             const headers = new Headers(networkResponse.headers);
             headers.set('Content-Type', 'application/javascript');
@@ -93,7 +129,19 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // For other cross-origin requests (e.g., Google Ads), let the browser handle them.
+  // For other cross-origin requests (e.g., Google Ads, esm.sh), use a network-first strategy.
+  // This ensures we get the latest versions but provides an offline fallback.
+  event.respondWith(
+    caches.open(CACHE_NAME).then(cache => {
+      return fetch(event.request).then(networkResponse => {
+        // esm.sh can return opaque responses which can't be cloned. We cache them carefully.
+        if (networkResponse.ok || networkResponse.type === 'opaque') {
+            cache.put(event.request, networkResponse.clone());
+        }
+        return networkResponse;
+      }).catch(() => cache.match(event.request));
+    })
+  );
 });
 
 
